@@ -52,7 +52,7 @@ function cmb2_user_search_render_field( $field, $escaped_value, $object_id, $obj
 	add_action( 'admin_footer', 'find_users_div' );
 
 	$error = __( 'An error has occurred. Please reload the page and try again.' );
-	$find = __( 'Find Posts or Pages' );
+	$find = __( 'Find %s' );
 
 	// @TODO this should really be in its own JS file.
 	?>
@@ -62,7 +62,7 @@ function cmb2_user_search_render_field( $field, $escaped_value, $object_id, $obj
 
 	          var l10n = {
 	            'error': '<?php echo esc_js( $error ); ?>',
-	            'find': '<?php echo esc_js( $find ) ?>'
+	            'find': '<?php echo sprintf( $find, $field->args( 'name' ) ) ?>'
 	          };
 
 	          var UserSearchView<?php echo str_replace( '-', '_', $field->args( 'id' ) ) ?> = window.Backbone.View.extend({
@@ -209,7 +209,8 @@ function cmb2_user_search_render_field( $field, $escaped_value, $object_id, $obj
 
 	          window.cmb2_user_search<?php echo str_replace( '-', '_', $field->args( 'id' ) ) ?> = new UserSearchView<?php echo str_replace( '-', '_', $field->args( 'id' ) ) ?>();
 
-	          $('.cmb-type-user-search-text.cmb2-id-<?php echo str_replace( '_', '-', sanitize_html_class( $field->args( 'id' ) ) ) ?> .cmb-th label').after('<div title="' + l10n.find + '" style="position:relative;left:30%;color: #999;cursor: pointer;" class="dashicons dashicons-search"></div>');
+	          $('.cmb-type-user-search-text.cmb2-id-<?php echo str_replace( '_', '-', sanitize_html_class( $field->args( 'id' ) ) ) ?> .cmb-th label').after('<div title="' + l10n.find + '" style="padding: 5px 0;margin-left: 2px;color: #999;cursor: pointer;" class="dashicons dashicons-search"></div>');
+	          $('.cmb-type-user-search-text.cmb2-id-<?php echo str_replace( '_', '-', sanitize_html_class( $field->args( 'id' ) ) ) ?> .cmb-th label').css({'cursor': 'default', 'display': 'inline-block' });
 
 	          $('.cmb-type-user-search-text.cmb2-id-<?php echo str_replace( '_', '-', sanitize_html_class( $field->args( 'id' ) ) ) ?> .cmb-th .dashicons-search').on('click', openSearch);
 
